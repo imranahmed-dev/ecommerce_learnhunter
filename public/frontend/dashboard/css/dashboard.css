@@ -1,0 +1,106 @@
+/********************** **************************
+				customer dashboard styles
+*********************** *************************/
+        .customer-dashboard-breadcrumb {
+            background: #fcfcfc;
+        }
+
+        .customer-dashboard {
+            background: #fcfcfc;
+            padding-bottom: 100px;
+        }
+
+        .dashboard-box {
+            color: #fff;
+        }
+
+        .cd-customer-name {
+            margin-bottom: 20px;
+            border-bottom: 1.5px solid #ddd;
+        }
+
+        .cd-customer-name h3 {
+            font-size: 30px;
+        }
+
+        .cd-customer-name span {
+            color: gray;
+            font-size: 19px;
+        }
+
+        .customer-menu-header {
+            border-bottom: 3px solid #f1f1f1;
+        }
+
+        .customer-menu-header h4 {
+            font-size: 20px;
+        }
+
+        .customer-dashboard-menu ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+        }
+
+        .customer-menu-active {
+            background: #ddd !important;
+            font-weight: 600 !important;
+            color: #333 !important;
+        }
+
+        .customer-dashboard-menu ul li a {
+            text-decoration: none;
+            padding: 8px 20px;
+            display: block;
+            color: #222;
+            font-weight: 500;
+            transition: .2s;
+            border-radius: 2px;
+            font-size: 15px;
+        }
+
+        .customer-dashboard-menu ul li a:hover {
+            background: #ddd;
+        }
+
+        .customer-dashboard-menu ul li {
+
+            border-bottom: 1px solid #ddd;
+
+
+        }
+
+        .customer-dashboard-menu ul li:last-child {
+            border-bottom: 0;
+        }
+
+        .dashbox-txt span {
+            font-size: 27px;
+            font-weight: 500;
+            margin-bottom: 7px;
+            display: block;
+        }
+
+        .dashbox-txt {
+            padding: 10px 15px;
+        }
+
+        .dashbox-txt p {
+            font-weight: 500;
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .dashboard-box a {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            background: #0000001f;
+            padding: 2px;
+        }
+
+        .customer-dashboard-body .col-md-3 {
+            padding: 0 7px;
+        }
