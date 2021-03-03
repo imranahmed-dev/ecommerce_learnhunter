@@ -1,12 +1,17 @@
 @extends('frontend.layouts.master')
 @section('title','User Register')
 @section('content')
+
+<style>
+    
+.cat_menu_container ul {
+    visibility: hidden;
+    opacity: 0;
+}
+</style>
+
+
 <!-- Title page -->
-<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({{asset('frontend/images/bg-01.jpg')}});">
-    <h2 class="ltext-105 cl0 txt-center">
-        Register
-    </h2>
-</section>
 
 <section class="py-5">
     <div class="container">
@@ -15,17 +20,13 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
+                    <h3 style="border-bottom: 1px solid #ddd; margin-bottom: 20px;padding-bottom:4px;">Sign Up</h3>
                         <form action="{{route('user.store')}}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="">Name</label>
-                                <input type="text" class="form-control" name="name" id="" placeholder="Enter your name" value="{{ old('name') }}">
+                                <label for="">Full Name</label>
+                                <input type="text" class="form-control" name="name" id="" placeholder="Full name" value="{{ old('name') }}">
                                 <div style='color:red; padding: 0 5px;'>{{($errors->has('name'))?($errors->first('name')):''}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Mobile Number</label>
-                                <input type="text" class="form-control" name="mobile" placeholder="Mobile number" value="{{ old('mobile') }}">
-                                <div style='color:red; padding: 0 5px;'>{{($errors->has('mobile'))?($errors->first('mobile')):''}}</div>
                             </div>
                             <div class="form-group">
                                 <label for="">Email</label>
@@ -33,9 +34,9 @@
                                 <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
                             </div>
                             <div class="form-group">
-                                <label for="">Address</label>
-                                <textarea class="form-control" name="address" rows="3" placeholder="Address">{{ old('address')}}</textarea>
-                                <div style='color:red; padding: 0 5px;'>{{($errors->has('address'))?($errors->first('address')):''}}</div>
+                                <label for="">Mobile Number</label>
+                                <input type="text" class="form-control" name="mobile" placeholder="Mobile number" value="{{ old('mobile') }}">
+                                <div style='color:red; padding: 0 5px;'>{{($errors->has('mobile'))?($errors->first('mobile')):''}}</div>
                             </div>
                             <div class="form-group">
                                 <label for="#">Password</label>

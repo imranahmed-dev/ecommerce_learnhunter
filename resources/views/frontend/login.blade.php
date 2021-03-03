@@ -1,12 +1,15 @@
 @extends('frontend.layouts.master')
 @section('title','User Login')
 @section('content')
-<!-- Title page -->
-<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({{asset('frontend/images/bg-01.jpg')}});">
-    <h2 class="ltext-105 cl0 txt-center">
-        Login
-    </h2>
-</section>
+
+<style>
+    
+.cat_menu_container ul {
+    visibility: hidden;
+    opacity: 0;
+}
+</style>
+
 
 <section class="py-5">
     <div class="container">
@@ -15,6 +18,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
+                    <h3 style="border-bottom: 1px solid #ddd; margin-bottom: 20px;padding-bottom:4px;">Login</h3>
                     <form action="{{ route('login') }}" method="post">
                             @csrf
 
@@ -29,7 +33,9 @@
                                 <input id="password" placeholder="Password" type="password" class="form-control" name="password" autocomplete="password">
                                 <div style='color:red; padding: 0 5px;'>{{($errors->has('password'))?($errors->first('password')):''}}</div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary mb-5"><i class="fa fa-user"></i> Sign In</button>
+                            <a href="#" class="btn btn-info btn-block"><i class="fab fa-facebook"></i> Login with facebook</a>
+                            <a href="#" class="btn btn-danger btn-block"><i class="fab fa-google"></i> Login with google</a>
                             <p class="my-3 text-center">
                                 <a href="#">I forgot my password</a>
                             </p>

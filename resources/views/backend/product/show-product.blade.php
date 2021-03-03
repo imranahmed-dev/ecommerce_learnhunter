@@ -66,7 +66,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="">Sub Category</label>
-                                        <p>{{$product->subcategory->subcategory_name}}</p>
+                                        <p>{{@$product->subcategory->subcategory_name}}</p>
 
                                     </div>
                                 </div>

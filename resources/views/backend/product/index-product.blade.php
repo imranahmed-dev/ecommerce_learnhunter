@@ -43,7 +43,7 @@
                                 <td><img width="80" src="{{asset($row->default_image)}}" alt="image"></td>
                                 <td>{{$row->product_name}}</td>
                                 <td>{{$row->category->category_name}}</td>
-                                <td>{{$row->subcategory->subcategory_name}}</td>
+                                <td>{{@$row->subcategory->subcategory_name}}</td>
                                 <td>{{$row->brand->brand_name}}</td>
                                 <td>
                                     @if($row->status == 1)

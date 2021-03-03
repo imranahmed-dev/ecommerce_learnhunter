@@ -17,9 +17,9 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/', 'FrontendController@index');
     // Route::get('/contact', 'FrontendController@contact')->name('contact');
     // Route::get('/cart', 'FrontendController@cart')->name('cart');
-    // Route::get('/user/login', 'FrontendController@userLogin')->name('user.login');
-    // Route::get('/user/register', 'FrontendController@userRegister')->name('user.register');
-    // Route::post('/user/store', 'FrontendController@userStore')->name('user.store');
+    Route::get('/user/login', 'FrontendController@userLogin')->name('user.login');
+    Route::get('/user/register', 'FrontendController@userRegister')->name('user.register');
+    Route::post('/user/store', 'FrontendController@userStore')->name('user.store');
 
     Route::get('/product/details', 'FrontendController@productDetails')->name('product.details');
 
@@ -43,7 +43,7 @@ Route::group(['prefix' => '/customer', 'namespace' => 'Frontend', 'middleware' =
 });
 
 //Auth route
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 /////////////////////////Default routes////////////////////////////////
 //Brand
