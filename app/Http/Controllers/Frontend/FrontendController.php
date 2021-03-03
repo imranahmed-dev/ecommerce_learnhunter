@@ -40,7 +40,8 @@ class FrontendController extends Controller
     {
         return view('frontend.register');
     }
-    public function productDetails(){
+    public function productDetails()
+    {
         return view('frontend.product-details');
     }
     public function userStore(Request $request)
@@ -48,8 +49,7 @@ class FrontendController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'mobile' => 'required|unique:users,mobile',
-            'email' => 'required|unique:users,email',
-            'address' => 'required',
+            'email' => 'required|email|unique:users,email',
             'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6',
         ]);
@@ -59,7 +59,6 @@ class FrontendController extends Controller
         $data->name = $request->name;
         $data->email = $request->email;
         $data->mobile = $request->mobile;
-        $data->address = $request->address;
         $data->password = bcrypt($request->password);
         $data->save();
 
@@ -68,7 +67,11 @@ class FrontendController extends Controller
         //     'alert-type' => 'success'
         //      );
         Auth::login($data, true);
-        return redirect()->route('user.dashboard');
+        $notification = array(
+            'message' => 'Registration successfully',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('user.dashboard')->with($notification);
     }
 
     public function newslaterStore(Request $request)
@@ -91,7 +94,7 @@ class FrontendController extends Controller
         $notification = array(
             'message' => 'Thanks For Subscribing...',
             'alert-type' => 'success'
-             );
-        return redirect()-> back()->with($notification,);
+        );
+        return redirect()->back()->with($notification,);
     }
 }

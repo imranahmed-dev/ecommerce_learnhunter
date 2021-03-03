@@ -2,6 +2,7 @@
 @section('title','Home')
 @section('content')
 @include('frontend.layouts.slider')
+
 <!-- Characteristics -->
 <div class="characteristics">
     <div class="container">

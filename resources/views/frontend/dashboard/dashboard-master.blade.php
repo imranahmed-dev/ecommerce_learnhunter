@@ -4,6 +4,14 @@
 $route = Route::current()->getName();
 @endphp
 
+<style>
+    
+.cat_menu_container ul {
+    visibility: hidden;
+    opacity: 0;
+}
+</style>
+
 <!--start profile section -->
 <section class="customer-dashboard clearfix pb-5 pt-4">
     <div class="container-fluid">
