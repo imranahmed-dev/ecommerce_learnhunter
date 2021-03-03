@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/dashboard')}}/css/dashboard.css">
     <!-- Toastr -->
     <link href="{{asset('defaults/toastr/toastr.min.css')}}" rel="stylesheet" />
-    
+
 
 </head>
 
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <script src="{{asset('frontend')}}/js/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{asset('frontend')}}/styles/bootstrap4/popper.js"></script>
     <script src="{{asset('frontend')}}/styles/bootstrap4/bootstrap.min.js"></script>
     <script src="{{asset('frontend')}}/plugins/greensock/TweenMax.min.js"></script>
@@ -155,6 +155,7 @@
     <script src="{{asset('defaults/sweetalert/sweetalert2@9.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('defaults/toastr/toastr.min.js')}}"></script>
+
 
     <script>
         @if(Session::has('message'))
@@ -177,28 +178,54 @@
         @endif
     </script>
 
+    <!-- Add wishlist -->
     <script>
-        $(document).on('click', '#delete', function(e) {
+        $(document).on('click', '.addwish', function(e) {
             e.preventDefault();
-            var link = $(this).attr("href");
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Delete this data!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    window.location.href = link;
-                    Swal.fire(
-                        'Deleted!',
-                        'Data has been deleted.',
-                        'success'
-                    )
-                }
-            })
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ url('/wishlist/store') }}/" + id,
+                method: "GET",
+                dataType: "JSON",
+
+                success: function(data) {
+                    if ($.isEmptyObject(data.error)) {
+                        toastr.success(data.success, 'Success', {
+                            timeOut: 3000
+                        });
+                    } else {
+                        toastr.error(data.error, {
+                            timeOut: 3000
+                        });
+                    }
+                },
+            });
+        });
+    </script>
+
+    <!-- Add wishlist -->
+    <script>
+        $(document).on('click', '.addcart', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{{ url('/cart/store') }}/" + id,
+                method: "GET",
+                dataType: "JSON",
+
+                success: function(data) {
+                    if ($.isEmptyObject(data.error)) {
+                        toastr.success(data.success, 'Success', {
+                            timeOut: 3000
+                        });
+                    } else {
+                        toastr.error(data.error, {
+                            timeOut: 3000
+                        });
+                    }
+                },
+            });
         });
     </script>
 </body>

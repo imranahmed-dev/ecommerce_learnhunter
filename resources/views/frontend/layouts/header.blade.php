@@ -37,9 +37,13 @@
 								</ul>
 							</div>
 							<div class="top_bar_user">
-								<div class="user_icon"><img src="images/user.svg" alt=""></div>
-								<div><a href="#">Register</a></div>
-								<div><a href="#">Sign in</a></div>
+								@if(Auth::check() && Auth::user()->role == 2)
+								<div><a href="{{route('user.dashboard')}}">{{Auth::user()->name}}</a></div>
+								@else
+								<div class="user_icon"><img src="{{asset('frontend')}}/images/user.svg" alt=""></div>
+								<div><a href="{{route('user.register')}}">Register</a></div>
+								<div><a href="{{route('user.login')}}">Sign in</a></div>
+								@endif
 							</div>
 						</div>
 					</div>

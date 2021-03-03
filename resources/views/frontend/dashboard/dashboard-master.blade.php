@@ -4,8 +4,7 @@
 $route = Route::current()->getName();
 @endphp
 
-<style>
-    
+<style> 
 .cat_menu_container ul {
     visibility: hidden;
     opacity: 0;

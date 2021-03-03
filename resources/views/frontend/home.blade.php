@@ -2,7 +2,6 @@
 @section('title','Home')
 @section('content')
 @include('frontend.layouts.slider')
-
 <!-- Characteristics -->
 <div class="characteristics">
     <div class="container">
@@ -184,10 +183,10 @@ $categories = App\Models\Category::all();
                                                     <input type="radio" name="product_color" style="background:#000000">
                                                     <input type="radio" name="product_color" style="background:#999999">
                                                 </div> -->
-                                                <button class="product_cart_button">Add to Cart</button>
+                                                <button  data-id="{{$product->id}}" class="product_cart_button addcart">Add to Cart</button>
                                             </div>
                                         </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <a href="#" class="addwish" data-id="{{$product->id}}"> <div class="product_fav"><i  class="fas fa-heart addwish"></i></div></a>
                                         <ul class="product_marks">
 
                                             @if($product->price_active == 2)
@@ -237,7 +236,7 @@ $categories = App\Models\Category::all();
                                                 <button class="product_cart_button">Add to Cart</button>
                                             </div>
                                         </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <a href="#" class="addwish" data-id="{{$product->id}}"> <div class="product_fav"><i  class="fas fa-heart addwish"></i></div></a>
                                         <ul class="product_marks">
 
                                             @if($product->price_active == 2)
@@ -285,7 +284,7 @@ $categories = App\Models\Category::all();
                                                 <button class="product_cart_button">Add to Cart</button>
                                             </div>
                                         </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <a href="#" class="addwish" data-id="{{$product->id}}"> <div class="product_fav"><i  class="fas fa-heart addwish"></i></div></a>
                                         <ul class="product_marks">
 
                                             @if($product->price_active == 2)

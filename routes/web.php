@@ -20,11 +20,19 @@ Route::group(['namespace' => 'Frontend'], function () {
     Route::get('/user/login', 'FrontendController@userLogin')->name('user.login');
     Route::get('/user/register', 'FrontendController@userRegister')->name('user.register');
     Route::post('/user/store', 'FrontendController@userStore')->name('user.store');
-
     Route::get('/product/details', 'FrontendController@productDetails')->name('product.details');
-
     Route::post('/newslater/store', 'FrontendController@newslaterStore')->name('newslater.store');
 });
+
+//Wishlist
+Route::get('/wishlist/store/{id}', 'Frontend\WishlistController@store');
+
+//Cart
+Route::get('/cart/store/{id}', 'Frontend\CartController@store');
+
+
+
+
 
 /*User dashboard*/
 Route::group(['prefix' => '/customer', 'namespace' => 'Frontend', 'middleware' => ['auth', 'user']], function () {
