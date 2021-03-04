@@ -32,6 +32,16 @@ class CartController extends Controller
         return response()->json(['success' => 'Successfully Added To Cart']);
     }
 
+    public function cartCount(){
+        $data = Cart::count();
+       return response()->json($data);
+    }
+
+    public function cartTotal(){
+        $data = Cart::total();
+       return response()->json($data);
+    }
+
     public function show($id)
     {
         //

@@ -27,4 +27,10 @@ class WishlistController extends Controller
             return response()->json(['error' => 'At first login your account!']);
         }
     }
+
+    public function wishlistCount(){
+        $data = Wishlist::where('user_id', Auth::user()->id)->count();
+        return response()->json($data);
+        
+    }
 }

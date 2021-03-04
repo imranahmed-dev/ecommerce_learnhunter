@@ -35,7 +35,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary mb-5"><i class="fa fa-user"></i> Sign In</button>
                             <a href="#" class="btn btn-info btn-block"><i class="fab fa-facebook"></i> Login with facebook</a>
-                            <a href="#" class="btn btn-danger btn-block"><i class="fab fa-google"></i> Login with google</a>
+                            <a href="{{ url('login/google') }}" class="btn btn-danger btn-block"><i class="fab fa-google"></i> Login with google</a>
                             <p class="my-3 text-center">
                                 <a href="#">I forgot my password</a>
                             </p>

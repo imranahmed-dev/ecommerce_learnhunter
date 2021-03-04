@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
-
+use App\User;
+use Socialite;
 class LoginController extends Controller
 {
     /*
@@ -36,11 +37,43 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        if(Auth::check() && Auth::user()->role == 1){
+        if (Auth::check() && Auth::user()->role == 1) {
             $this->redirectTo = route('home');
-        }else{
+        } else {
             $this->redirectTo = route('user.dashboard');
         }
         $this->middleware('guest')->except('logout');
+    }
+
+
+
+
+    public function socialLogin($social)
+    {
+        return Socialite::driver($social)->redirect();
+    }
+
+    public function handleProviderCallback($social)
+    {
+        $userSocial = Socialite::driver($social)->user();
+
+        $user = User::where(['email' => $userSocial->getEmail()])->first();
+        if ($user) {
+            Auth::login($user);
+            return redirect(Route('user.dashboard'));
+        } else {
+
+            $user = new User;
+            $user->role = 2;
+            $user->name = $userSocial->getName();
+            $user->email = $userSocial->getEmail();
+            $user->image = $userSocial->getAvatar();
+            $user->provider_id = $userSocial->getId();
+            $user->provider = $social;
+            $user->save();
+            
+            Auth::login($user, true);
+            return redirect('customer/dashboard');
+        }
     }
 }

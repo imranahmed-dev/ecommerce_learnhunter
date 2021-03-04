@@ -178,6 +178,39 @@
         @endif
     </script>
 
+    <script>
+        //Cart Qty
+        function cartCount() {
+            $.ajax({
+                url: "{{ url('/cart/count') }}",
+                success: function(data) {
+                    $('.cartQty').html(data);
+                }
+            })
+        }
+        //Wishlist
+        function wishlistCount() {
+            $.ajax({
+                url: "{{ url('/wishlist/count') }}",
+                success: function(data) {
+                    $('.wishlistCount').html(data);
+                }
+            })
+        }
+        //Cart total
+        function cartTotal() {
+            $.ajax({
+                url: "{{ url('/cart/total') }}",
+                success: function(data) {
+                    $('.cartTotal').html(data);
+                }
+            })
+        }
+        cartCount();
+        wishlistCount();
+        cartTotal();
+    </script>
+
     <!-- Add wishlist -->
     <script>
         $(document).on('click', '.addwish', function(e) {
@@ -190,6 +223,7 @@
                 dataType: "JSON",
 
                 success: function(data) {
+                    wishlistCount();
                     if ($.isEmptyObject(data.error)) {
                         toastr.success(data.success, 'Success', {
                             timeOut: 3000
@@ -204,7 +238,7 @@
         });
     </script>
 
-    <!-- Add wishlist -->
+    <!-- Add cart -->
     <script>
         $(document).on('click', '.addcart', function(e) {
             e.preventDefault();
@@ -213,8 +247,9 @@
                 url: "{{ url('/cart/store') }}/" + id,
                 method: "GET",
                 dataType: "JSON",
-
                 success: function(data) {
+                    cartCount();
+                    cartTotal();
                     if ($.isEmptyObject(data.error)) {
                         toastr.success(data.success, 'Success', {
                             timeOut: 3000

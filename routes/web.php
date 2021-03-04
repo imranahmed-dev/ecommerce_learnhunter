@@ -26,10 +26,12 @@ Route::group(['namespace' => 'Frontend'], function () {
 
 //Wishlist
 Route::get('/wishlist/store/{id}', 'Frontend\WishlistController@store');
+Route::get('/wishlist/count', 'Frontend\WishlistController@wishlistCount');
 
 //Cart
 Route::get('/cart/store/{id}', 'Frontend\CartController@store');
-
+Route::get('/cart/count', 'Frontend\CartController@cartCount');
+Route::get('/cart/total', 'Frontend\CartController@cartTotal');
 
 
 
@@ -51,7 +53,14 @@ Route::group(['prefix' => '/customer', 'namespace' => 'Frontend', 'middleware' =
 });
 
 //Auth route
-Auth::routes(['verify' => true]);
+Auth::routes();
+
+//Social Login
+Route::get('/login/{social}','Auth\LoginController@socialLogin')->where('social','twitter|facebook|linkedin|google|github|bitbucket');
+
+Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')->where('social','twitter|facebook|linkedin|google|github|bitbucket');
+
+
 
 /////////////////////////Default routes////////////////////////////////
 //Brand
