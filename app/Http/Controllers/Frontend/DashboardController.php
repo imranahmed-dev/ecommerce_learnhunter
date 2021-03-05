@@ -37,9 +37,6 @@ class DashboardController extends Controller
             'address' => 'required',
         ]);
 
-
-
-
         $data = User::where('id', Auth::user()->id)->first();
         $data->name = $request->name;
         $data->mobile = $request->mobile;

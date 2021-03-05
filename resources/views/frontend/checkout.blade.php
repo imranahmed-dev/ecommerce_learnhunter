@@ -1,88 +1,160 @@
 @extends('frontend.layouts.master')
 @section('title','Checkout')
 @section('content')
-<!-- Title page -->
-<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({{asset('frontend/images/bg-01.jpg')}});">
-    <h2 class="ltext-105 cl0 txt-center">
-        Checkout
-    </h2>
-</section>
-<!-- Shoping Cart -->
-<section class="bg0 p-t-75 p-b-85">
+
+
+<link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/cart_styles.css">
+<link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/cart_responsive.css">
+
+<div class="cart_section pt-5">
     <div class="container">
-        <form action="{{route('shipping.store')}}" method="post">
-            @csrf
-            <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 30px;">
-                    <div class="card card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Name</label>
-                                    <input type="text" name="name" placeholder="Enter name" class="form-control">
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('name'))?($errors->first('name')):''}}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Email</label>
-                                    <input type="text" name="email" placeholder="Enter email" class="form-control">
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Mobile</label>
-                                    <input type="text" name="mobile" placeholder="Enter mobile" class="form-control">
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('mobile'))?($errors->first('mobile')):''}}</div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="">Address</label>
-                                    <input type="text" name="address" placeholder="Enter address" class="form-control">
-                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('address'))?($errors->first('address')):''}}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                    <div class="wrap-table-shopping-cart">
-                        <table class="table-shopping-cart">
-                            <tr class="table_head">
-                                <th class="column-1">
-                                    <h5>What would you like to do next?</h5>
-                                    <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-                                </th>
-                            </tr>
-                            <tr class="table_row">
-                                <td class="column-1">
-                                    <div class="total_area">
-                                        <ul>
-                                            <li>Sub Total <span>Tk {{Cart::subtotal()}}</span></li>
-                                            <li>Tax <span> Tk {{Cart::tax()}}</span></li>
-                                            <li>Shipping Cost <span>Free</span></li>
-                                            <li>Total <span>Tk {{Cart::total()}}</span></li>
-                                        </ul>
+        <div class="row">
+            <div class="col">
+                <div class="cart_title mb-3">Checkout</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-7">
+                <div class="cart_container">
+                    <div class="cart_items mt-0">
+                        <ul class="cart_list">
+                            @foreach(Cart::content() as $product)
+                            <li class="cart_item clearfix">
+                                <div class="cart_item_image"><img src="{{asset($product->options->image)}}" alt=""></div>
+                                <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                    <div class="cart_item_name cart_info_col">
+                                        <div class="cart_item_title">Name</div>
+                                        <div class="cart_item_text">{{$product->name}}</div>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
+                                    <div class="cart_item_quantity cart_info_col">
+                                        <div class="cart_item_title">Quantity</div>
+                                        <div class="cart_item_text">{{$product->qty}}</div>
+                                    </div>
+                                    <div class="cart_item_price cart_info_col">
+                                        <div class="cart_item_title">Price</div>
+                                        <div class="cart_item_text">${{$product->price}}</div>
+                                    </div>
+                                    <div class="cart_item_total cart_info_col">
+                                        <div class="cart_item_title">Total</div>
+                                        <div class="cart_item_text">${{$product->total}}</div>
+                                    </div>
+                                </div>
+                            </li>
+                            @endforeach
+                        </ul>
                     </div>
 
-                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                        <div class="flex-w flex-m m-r-20 m-tb-5">
+                </div>
+                <!-- Order Total -->
+                <div class="row">
 
-                            <button type="submit" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Submit</button>
+                    <div class="col-md-12">
+                        <div class="your-order mt-4">
+                            @php
+                            $shipping = 50;
+                            @endphp
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Sub Total</th>
+                                    <td>${{Cart::subtotalFloat()}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping Charge</th>
+                                    <td>${{$shipping}}</td>
+                                </tr>
+                                @if(Session::has('coupon'))
+                                <tr>
+                                    <th>Coupon Discount : ({{Session::get('coupon')['name']}}) <a class="ml-2" href="{{route('coupon.remove')}}"><i class="fa fa-times"></i></a> </th>
+                                    <td>${{Session::get('coupon')['discount']}}</td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <th>Coupon Discount</th>
+                                    <td>$0</td>
+                                </tr>
+                                @endif
+
+                                <tr>
+                                    <th>Total</th>
+                                    @if(Session::has('coupon'))
+                                    <td>${{Cart::subtotalFloat() - $shipping - Session::get('coupon')['discount']}}</td>
+                                    @else
+                                    <td>${{Cart::subtotalFloat() - $shipping}}</td>
+                                    @endif
+                                </tr>
+
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="col-md-5">
+                <div class="card card-body">
+                <div class="form-group">
+                    <label for="">Full Name</label>
+                    <input type="text" name="name" placeholder="Full name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="text" name="phone" placeholder="Phone number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="text" name="email" placeholder="Email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Division</label>
+                    <select class="form-control m-0" name="division_id" id="division_id">
+                        <option value="">Select Division</option>
+                        @foreach($divisions as $division)
+                        <option value="{{$division->id}}" {{ old('division_id') == $division->id ? 'selected' : '' }}>{{$division->division_name}}</option>
+                        @endforeach
+                    </select>
+                    <div style='color:red; padding: 0 5px;'>{{($errors->has('division_id'))?($errors->first('division_id')):''}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="">District</label>
+                    <select class="form-control m-0" name="district_id" id="district_id">
+                        <option value="">Select District</option>
+                    </select>
+                    <div style='color:red; padding: 0 5px;'>{{($errors->has('district_id'))?($errors->first('district_id')):''}}</div>
+                </div>
+                <div class="form-group">
+                    <label for="">Full Address</label>
+                    <textarea name="address" id="" rows="4" class="form-control" placeholder="Full Address"></textarea>
+                </div>
+                <div class="form-group">
+                    
+                </div>
+                
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
+            </div>
+        </div>
     </div>
-</section>
+</div>
 
 
+@section('customjs')
+<script>
+    $(function() {
+        $(document).on('change', '#division_id', function() {
+            var division_id = $(this).val();
+            $.ajax({
+                type: "Get",
+                url: "{{url('/get/division/')}}/" + division_id,
+                dataType: "json",
+                success: function(data) {
+                    var html = '<option value="">Select District</option>';
+                    $.each(data, function(key, val) {
+                        html += '<option value="' + val.id + '">' + val.district_name + '</option>';
+                    });
+                    $('#district_id').html(html);
+                },
+
+            });
+        });
+    });
+</script>
+@endsection
 @endsection

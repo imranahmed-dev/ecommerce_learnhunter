@@ -23,6 +23,8 @@
     <link href="{{asset('defaults/toastr/toastr.min.css')}}" rel="stylesheet" />
 
 
+
+
 </head>
 
 <body>
@@ -31,6 +33,34 @@
         @include('frontend.layouts.header')
 
         @yield('content')
+
+        <!-- Newsletter -->
+<div class="newsletter">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+                    <div class="newsletter_title_container">
+                        <div class="newsletter_icon"><img src="{{asset('frontend')}}/images/send.png" alt=""></div>
+                        <div class="newsletter_title">Sign up for Newsletter</div>
+                        <div class="newsletter_text">
+                            <p>...and receive %20 coupon for first shopping.</p>
+                        </div>
+                    </div>
+                    <div class="newsletter_content clearfix">
+                        <form action="{{route('newslater.store')}}" class="newsletter_form" method="post">
+                            @csrf
+                            <input name="email" type="email" class="newsletter_input" placeholder="Enter your email address">
+                            <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
+                            <button type="submit" class="newsletter_button">Subscribe</button>
+                        </form>
+                        <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Footer -->
         <footer class="footer">
@@ -136,6 +166,18 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .logo_container{
+            height: 125px;
+        }
+        .header_search{
+            height: 125px;
+        }
+        .wishlist_cart{
+            height: 125px;
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{asset('frontend')}}/styles/bootstrap4/popper.js"></script>

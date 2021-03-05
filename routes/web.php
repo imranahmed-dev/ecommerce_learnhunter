@@ -15,14 +15,15 @@ Route::get('clear', function () {
 Route::group(['namespace' => 'Frontend'], function () {
 
     Route::get('/', 'FrontendController@index');
-    // Route::get('/contact', 'FrontendController@contact')->name('contact');
-    // Route::get('/cart', 'FrontendController@cart')->name('cart');
+    Route::get('/checkout', 'FrontendController@checkout')->name('checkout');
+    Route::get('/cart', 'FrontendController@cart')->name('cart');
     Route::get('/user/login', 'FrontendController@userLogin')->name('user.login');
     Route::get('/user/register', 'FrontendController@userRegister')->name('user.register');
     Route::post('/user/store', 'FrontendController@userStore')->name('user.store');
-    Route::get('/product/details', 'FrontendController@productDetails')->name('product.details');
+    Route::get('/product/details/{slug}', 'FrontendController@productDetails')->name('product.details');
     Route::post('/newslater/store', 'FrontendController@newslaterStore')->name('newslater.store');
 });
+
 
 //Wishlist
 Route::get('/wishlist/store/{id}', 'Frontend\WishlistController@store');
@@ -32,6 +33,8 @@ Route::get('/wishlist/count', 'Frontend\WishlistController@wishlistCount');
 Route::get('/cart/store/{id}', 'Frontend\CartController@store');
 Route::get('/cart/count', 'Frontend\CartController@cartCount');
 Route::get('/cart/total', 'Frontend\CartController@cartTotal');
+Route::post('/apply/coupon', 'Frontend\CartController@applyCoupon')->name('apply.coupon');
+Route::get('/coupon/remove', 'Frontend\CartController@couponRemove')->name('coupon.remove');
 
 
 
@@ -56,17 +59,18 @@ Route::group(['prefix' => '/customer', 'namespace' => 'Frontend', 'middleware' =
 Auth::routes();
 
 //Social Login
-Route::get('/login/{social}','Auth\LoginController@socialLogin')->where('social','twitter|facebook|linkedin|google|github|bitbucket');
+Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
 
-Route::get('/login/{social}/callback','Auth\LoginController@handleProviderCallback')->where('social','twitter|facebook|linkedin|google|github|bitbucket');
+Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
 
 
 
 /////////////////////////Default routes////////////////////////////////
-//Brand
+//Get Data ajax
 Route::group(['namespace' => 'DefaultController'], function () {
 
     Route::get('/get/subcategory/{id}', 'DefaultController@get_subcategory')->name('get.subcategory');
+    Route::get('/get/division/{id}', 'DefaultController@get_district')->name('get.district');
 });
 
 /////////////////////////Backend routes////////////////////////////////
@@ -93,6 +97,26 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         Route::post('/update', 'ProfileController@update')->name('update');
         Route::get('/edit/password', 'ProfileController@editPassword')->name('ep');
         Route::post('/update/password', 'ProfileController@updatePassword')->name('up');
+    });
+
+    //Division
+    Route::group(['as' => 'division.', 'prefix' => '/division', 'namespace' => 'Backend'], function () {
+        Route::get('/index', 'DivisionController@index')->name('index');
+        Route::get('/create', 'DivisionController@create')->name('create');
+        Route::post('/store', 'DivisionController@store')->name('store');
+        Route::get('/edit/{id}', 'DivisionController@edit')->name('edit');
+        Route::post('/update/{id}', 'DivisionController@update')->name('update');
+        Route::get('/destroy/{id}', 'DivisionController@destroy')->name('destroy');
+    });
+
+    //District
+    Route::group(['as' => 'district.', 'prefix' => '/district', 'namespace' => 'Backend'], function () {
+        Route::get('/index', 'DistrictController@index')->name('index');
+        Route::get('/create', 'DistrictController@create')->name('create');
+        Route::post('/store', 'DistrictController@store')->name('store');
+        Route::get('/edit/{id}', 'DistrictController@edit')->name('edit');
+        Route::post('/update/{id}', 'DistrictController@update')->name('update');
+        Route::get('/destroy/{id}', 'DistrictController@destroy')->name('destroy');
     });
 
     //Category

@@ -9,11 +9,11 @@ use App\Models\Category;
 use App\Models\Brand;
 use App\Models\ProductSize;
 use App\Models\ProductColor;
-use App\Models\ProductImage;
 use App\User;
 use Auth;
 use Validator;
 use App\Models\Newslater;
+use App\Models\Division;
 
 class FrontendController extends Controller
 {
@@ -24,9 +24,10 @@ class FrontendController extends Controller
         $data['brands'] = Product::select('brand_id')->get();
         return view('frontend.home', $data);
     }
-    public function contact()
+    public function checkout()
     {
-        return view('frontend.contact');
+        $data['divisions'] = Division::all();
+        return view('frontend.checkout',$data);
     }
     public function cart()
     {
@@ -40,9 +41,11 @@ class FrontendController extends Controller
     {
         return view('frontend.register');
     }
-    public function productDetails()
+    public function productDetails($slug)
     {
-        return view('frontend.product-details');
+        $data['brands'] = Brand::all();
+        $data['product'] = Product::where('product_slug', $slug)->first();
+        return view('frontend.product-details',$data);
     }
     public function userStore(Request $request)
     {
@@ -62,10 +65,10 @@ class FrontendController extends Controller
         $data->password = bcrypt($request->password);
         $data->save();
 
-        // $notification = array(
-        //     'message' => 'Registration Successfully!',
-        //     'alert-type' => 'success'
-        //      );
+        $notification = array(
+            'message' => 'Registration Successfully!',
+            'alert-type' => 'success'
+             );
         Auth::login($data, true);
         $notification = array(
             'message' => 'Registration successfully',
@@ -97,4 +100,5 @@ class FrontendController extends Controller
         );
         return redirect()->back()->with($notification,);
     }
+
 }

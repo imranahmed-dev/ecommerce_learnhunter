@@ -40,6 +40,26 @@
             <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret"></b>
+                    <i class="fa fa-map-marker"></i>
+                    <span>Division</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{route('division.index')}}"><i class="fa fa-plus-list"></i> Division List</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret"></b>
+                    <i class="fa fa-map-marker"></i>
+                    <span>District</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{route('district.index')}}"><i class="fa fa-plus-list"></i> District List</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret"></b>
                     <i class="fa fa-tags"></i>
                     <span>Category & Brand</span>
                 </a>

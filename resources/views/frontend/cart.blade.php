@@ -1,94 +1,115 @@
 @extends('frontend.layouts.master')
 @section('title','Cart')
 @section('content')
-	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url({{asset('frontend/images/bg-01.jpg')}});">
-		<h2 class="ltext-105 cl0 txt-center">
-			Shopping Cart
-		</h2>
-	</section>	
+<!-- Cart -->
 
-	<!-- Shoping Cart -->
-	<form class="bg0 p-t-75 p-b-85">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 col-lg-12 col-xl-12" style="padding-bottom: 30px;">
-					<div class="wrap-table-shopping-cart">
-						<table class="table-shopping-cart">
-							<tr class="table_head">
-								<th class="column-1">Product</th>
-								<th class="column-2"></th>
-								<th class="column-3">Price</th>
-								<th class="column-4">Quantity</th>
-								<th class="column-5">Total</th>
-								<th>Action</th>
-							</tr>
-							@foreach(Cart::content() as $cartproduct)
-							<tr class="table_row">
-								<td class="column-1">
-									<div class="how-itemcart1">
-										<img src="{{asset($cartproduct->options->image)}}" alt="IMG">
+<link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/cart_styles.css">
+<link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/styles/cart_responsive.css">
+
+<div class="cart_section pt-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="cart_container">
+					<div class="cart_title">Shopping Cart</div>
+					<div class="cart_items">
+						<ul class="cart_list">
+							@foreach(Cart::content() as $product)
+							<li class="cart_item clearfix">
+								<div class="cart_item_image"><img src="{{asset($product->options->image)}}" alt=""></div>
+								<div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+									<div class="cart_item_name cart_info_col">
+										<div class="cart_item_title">Name</div>
+										<div class="cart_item_text">{{$product->name}}</div>
 									</div>
-								</td>
-								<td class="column-2">{{$cartproduct->name}}</td>
-								<td class="column-3">Tk {{$cartproduct->price}}</td>
-								<td class="column-4">
-									<div class="wrap-num-product flex-w m-l-auto m-r-0">
-										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-minus"></i>
-										</div>
-
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="{{$cartproduct->qty}}">
-
-										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-											<i class="fs-16 zmdi zmdi-plus"></i>
-										</div>
+									<div class="cart_item_quantity cart_info_col">
+										<div class="cart_item_title">Quantity</div>
+										<div class="cart_item_text">{{$product->qty}}</div>
 									</div>
-								</td>
-								<td class="column-5">Tk {{$cartproduct->total}}</td>
-								<td class="column-2"><a href="{{route('cart.destroy',$cartproduct->rowId)}}">X</a></td>
-							</tr>
+									<div class="cart_item_price cart_info_col">
+										<div class="cart_item_title">Price</div>
+										<div class="cart_item_text">${{$product->price}}</div>
+									</div>
+									<div class="cart_item_total cart_info_col">
+										<div class="cart_item_title">Total</div>
+										<div class="cart_item_text">${{$product->total}}</div>
+									</div>
+								</div>
+							</li>
 							@endforeach
-						</table>
+						</ul>
 					</div>
-				</div>
 
-				<div class="col-md-12 col-lg-12 col-xl-12">
-					<div class="wrap-table-shopping-cart">
-                        <table class="table-shopping-cart">
-                            <tr class="table_head">
-                                <th class="column-1">
-                                    <h5>What would you like to do next?</h5>
-                                    <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-                                </th>
-                            </tr>
-                            <tr class="table_row">
-                                <td class="column-1">
-                                    <div class="total_area">
-                                        <ul>
-                                        <li>Sub Total <span>Tk {{Cart::subtotal()}}</span></li>
-                                        <li>Tax <span> Tk {{Cart::tax()}}</span></li>
-                                        <li>Shipping Cost <span>Free</span></li>
-                                        <li>Total <span>Tk {{Cart::total()}}</span></li>
-                                    </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+					<!-- Order Total -->
+					<div class="card card-body mt-4">
+						<div class="row">
+							<div class="col-md-6">
+								@if(!Session::has('coupon'))
+								<form action="{{route('apply.coupon')}}" method="post">
+									@csrf
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-6">
+												<input type="text" name="coupon" placeholder="Coupon" class="form-control">
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<input type="submit" class="btn btn-primary">
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+								@endif
+							</div>
+							<div class="col-md-6">
+								@php
+								$shipping = 50;
+								@endphp
+								<table class="table table-bordered">
+									<tr>
+										<th>Sub Total</th>
+										<td>${{Cart::subtotalFloat()}}</td>
+									</tr>
+									<tr>
+										<th>Shipping Charge</th>
+										<td>${{$shipping}}</td>
+									</tr>
+									@if(Session::has('coupon'))
+									<tr>
+										<th>Coupon Discount : ({{Session::get('coupon')['name']}}) <a class="ml-2" href="{{route('coupon.remove')}}"><i class="fa fa-times"></i></a> </th>
+										<td>${{Session::get('coupon')['discount']}}</td>
+									</tr>
+									@else
+									<tr>
+										<th>Coupon Discount</th>
+										<td>$0</td>
+									</tr>
+									@endif
 
-                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                        <div class="flex-w flex-m m-r-20 m-tb-5">
-                            <a href="{{url('/')}}" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Continue Shopping</a>
-                            &nbsp;&nbsp;
+									<tr>
+										<th>Total</th>
+										@if(Session::has('coupon'))
+										<td>${{Cart::subtotalFloat() - $shipping - Session::get('coupon')['discount']}}</td>
+										@else
+										<td>${{Cart::subtotalFloat() - $shipping}}</td>
+										@endif
+									</tr>
 
-                            <a href="{{route('cart.checkout')}}" class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Checkout</a>
-                        </div>
-                    </div>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="cart_buttons mt-3">
+						<a href="#" class="button cart_button_clear">Continue Shopping</a>
+						<a href="#" class="button cart_button_checkout">Checkout</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
+</div>
 
 
 @endsection

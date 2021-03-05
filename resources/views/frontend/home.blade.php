@@ -2,6 +2,8 @@
 @section('title','Home')
 @section('content')
 @include('frontend.layouts.slider')
+
+
 <!-- Characteristics -->
 <div class="characteristics">
     <div class="container">
@@ -57,6 +59,8 @@
         </div>
     </div>
 </div>
+
+
 
 @php
 $featured = App\Models\Product::where('status',1)->latest()->get();
@@ -175,7 +179,7 @@ $categories = App\Models\Category::all();
                                             <div class="product_price discount">${{$product->discount_price}}<span><del>${{$product->selling_price}}</del></span></div>
                                             @endif
                                             <div class="product_name">
-                                                <div><a href="product.html">{{ Str::limit($product->product_name, 15) }}</a></div>
+                                                <div><a href="{{route('product.details',$product->product_slug)}}">{{ Str::limit($product->product_name, 15) }}</a></div>
                                             </div>
                                             <div class="product_extras">
                                                 <!-- <div class="product_color">
@@ -2958,31 +2962,5 @@ $categories = App\Models\Category::all();
     </div>
 </div>
 
-<!-- Newsletter -->
-<div class="newsletter">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
-                    <div class="newsletter_title_container">
-                        <div class="newsletter_icon"><img src="{{asset('frontend')}}/images/send.png" alt=""></div>
-                        <div class="newsletter_title">Sign up for Newsletter</div>
-                        <div class="newsletter_text">
-                            <p>...and receive %20 coupon for first shopping.</p>
-                        </div>
-                    </div>
-                    <div class="newsletter_content clearfix">
-                        <form action="{{route('newslater.store')}}" class="newsletter_form" method="post">
-                            @csrf
-                            <input name="email" type="email" class="newsletter_input" placeholder="Enter your email address">
-                            <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
-                            <button type="submit" class="newsletter_button">Subscribe</button>
-                        </form>
-                        <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 @endsection
