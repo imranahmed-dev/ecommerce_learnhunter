@@ -78,7 +78,7 @@
 									@if(Session::has('coupon'))
 									<tr>
 										<th>Coupon Discount : ({{Session::get('coupon')['name']}}) <a class="ml-2" href="{{route('coupon.remove')}}"><i class="fa fa-times"></i></a> </th>
-										<td>${{Session::get('coupon')['discount']}}</td>
+										<td>-${{Session::get('coupon')['discount']}}</td>
 									</tr>
 									@else
 									<tr>
@@ -90,9 +90,9 @@
 									<tr>
 										<th>Total</th>
 										@if(Session::has('coupon'))
-										<td>${{Cart::subtotalFloat() - $shipping - Session::get('coupon')['discount']}}</td>
+										<td>${{(Cart::subtotalFloat() - Session::get('coupon')['discount']) + $shipping}}</td>
 										@else
-										<td>${{Cart::subtotalFloat() - $shipping}}</td>
+										<td>${{Cart::subtotalFloat() + $shipping}}</td>
 										@endif
 									</tr>
 
@@ -103,7 +103,7 @@
 
 					<div class="cart_buttons mt-3">
 						<a href="#" class="button cart_button_clear">Continue Shopping</a>
-						<a href="#" class="button cart_button_checkout">Checkout</a>
+						<a href="{{route('checkout')}}" class="button cart_button_checkout">Checkout</a>
 					</div>
 				</div>
 			</div>

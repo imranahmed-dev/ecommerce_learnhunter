@@ -17,7 +17,10 @@
             <div class="col-md-7">
                 <div class="cart_container">
                     <div class="cart_items mt-0">
-                        <ul class="cart_list">
+                        <ul class="card" style="border-radius: 0;">
+                            <div class="card-body">
+                                <h4>Product</h4>
+                            </div>
                             @foreach(Cart::content() as $product)
                             <li class="cart_item clearfix">
                                 <div class="cart_item_image"><img src="{{asset($product->options->image)}}" alt=""></div>
@@ -64,8 +67,8 @@
                                 </tr>
                                 @if(Session::has('coupon'))
                                 <tr>
-                                    <th>Coupon Discount : ({{Session::get('coupon')['name']}}) <a class="ml-2" href="{{route('coupon.remove')}}"><i class="fa fa-times"></i></a> </th>
-                                    <td>${{Session::get('coupon')['discount']}}</td>
+                                    <th>Coupon Discount : ({{Session::get('coupon')['name']}}) </th>
+                                    <td>-${{Session::get('coupon')['discount']}}</td>
                                 </tr>
                                 @else
                                 <tr>
@@ -77,9 +80,9 @@
                                 <tr>
                                     <th>Total</th>
                                     @if(Session::has('coupon'))
-                                    <td>${{Cart::subtotalFloat() - $shipping - Session::get('coupon')['discount']}}</td>
+                                    <td>${{(Cart::subtotalFloat() - Session::get('coupon')['discount']) + $shipping}}</td>
                                     @else
-                                    <td>${{Cart::subtotalFloat() - $shipping}}</td>
+                                    <td>${{Cart::subtotalFloat() + $shipping}}</td>
                                     @endif
                                 </tr>
 
@@ -89,46 +92,60 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="card card-body">
-                <div class="form-group">
-                    <label for="">Full Name</label>
-                    <input type="text" name="name" placeholder="Full name" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input type="text" name="phone" placeholder="Phone number" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input type="text" name="email" placeholder="Email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">Division</label>
-                    <select class="form-control m-0" name="division_id" id="division_id">
-                        <option value="">Select Division</option>
-                        @foreach($divisions as $division)
-                        <option value="{{$division->id}}" {{ old('division_id') == $division->id ? 'selected' : '' }}>{{$division->division_name}}</option>
-                        @endforeach
-                    </select>
-                    <div style='color:red; padding: 0 5px;'>{{($errors->has('division_id'))?($errors->first('division_id')):''}}</div>
-                </div>
-                <div class="form-group">
-                    <label for="">District</label>
-                    <select class="form-control m-0" name="district_id" id="district_id">
-                        <option value="">Select District</option>
-                    </select>
-                    <div style='color:red; padding: 0 5px;'>{{($errors->has('district_id'))?($errors->first('district_id')):''}}</div>
-                </div>
-                <div class="form-group">
-                    <label for="">Full Address</label>
-                    <textarea name="address" id="" rows="4" class="form-control" placeholder="Full Address"></textarea>
-                </div>
-                <div class="form-group">
-                    
-                </div>
-                
-                </div>
-                <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
+                <form action="{{route('payment.process')}}" method="post">
+                    @csrf
+                    <div class="card card-body" style="border-radius: 0;">
+                        <h4 class="mb-4">Billing Information</h4>
+                        <div class="form-group">
+                            <label for="">Full Name</label>
+                            <input type="text" name="name" placeholder="Full name" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Phone</label>
+                            <input type="text" name="phone" placeholder="Phone number" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email</label>
+                            <input type="text" name="email" placeholder="Email" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Division</label>
+                            <select class="form-control form-control-sm m-0" name="division_id" id="division_id">
+                                <option value="">Select Division</option>
+                                @foreach($divisions as $division)
+                                <option value="{{$division->id}}" {{ old('division_id') == $division->id ? 'selected' : '' }}>{{$division->division_name}}</option>
+                                @endforeach
+                            </select>
+                            <div style='color:red; padding: 0 5px;'>{{($errors->has('division_id'))?($errors->first('division_id')):''}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">District</label>
+                            <select class="form-control form-control-sm m-0" name="district_id" id="district_id">
+                                <option value="">Select District</option>
+                            </select>
+                            <div style='color:red; padding: 0 5px;'>{{($errors->has('district_id'))?($errors->first('district_id')):''}}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Full Address</label>
+                            <textarea name="address" id="" rows="4" class="form-control form-control-sm" placeholder="Full Address"></textarea>
+                        </div>
+                        <div class="form-group mt-2">
+                            <h4>Payment Method</h4>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" id="stripe" name="payment" value="Stripe">
+                            <label class="mr-2" for="stripe"> Stripe</label>
+
+                            <!-- <input type="radio" id="paypal" name="payment" value="Paypal">
+                            <label class="mr-2" for="paypal"> Paypal</label> -->
+
+                            <input type="radio" id="ideal" name="payment" value="Ideal">
+                            <label class="mr-2" for="ideal"> Ideal</label>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Pay Now</button>
+                </form>
             </div>
         </div>
     </div>

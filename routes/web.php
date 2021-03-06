@@ -36,6 +36,10 @@ Route::get('/cart/total', 'Frontend\CartController@cartTotal');
 Route::post('/apply/coupon', 'Frontend\CartController@applyCoupon')->name('apply.coupon');
 Route::get('/coupon/remove', 'Frontend\CartController@couponRemove')->name('coupon.remove');
 
+//Payment method
+Route::post('/payment/process', 'Frontend\PaymentController@paymentProcess')->name('payment.process');
+Route::post('/stripe/charge', 'Frontend\PaymentController@stripeCharge')->name('stripe.charge');
+
 
 
 

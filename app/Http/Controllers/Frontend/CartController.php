@@ -44,7 +44,7 @@ class CartController extends Controller
     }
 
     public function cartTotal(){
-        $data = Cart::total();
+        $data = Cart::totalFloat();
        return response()->json($data);
     }
 

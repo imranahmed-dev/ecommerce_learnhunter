@@ -26,8 +26,16 @@ class FrontendController extends Controller
     }
     public function checkout()
     {
-        $data['divisions'] = Division::all();
-        return view('frontend.checkout',$data);
+        if (Auth::check() && Auth::user()->role == 2) {
+            $data['divisions'] = Division::all();
+            return view('frontend.checkout', $data);
+        } else {
+            $notification = array(
+                'message' => 'Plese at first login',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
     public function cart()
     {
@@ -45,7 +53,7 @@ class FrontendController extends Controller
     {
         $data['brands'] = Brand::all();
         $data['product'] = Product::where('product_slug', $slug)->first();
-        return view('frontend.product-details',$data);
+        return view('frontend.product-details', $data);
     }
     public function userStore(Request $request)
     {
@@ -68,7 +76,7 @@ class FrontendController extends Controller
         $notification = array(
             'message' => 'Registration Successfully!',
             'alert-type' => 'success'
-             );
+        );
         Auth::login($data, true);
         $notification = array(
             'message' => 'Registration successfully',
@@ -100,5 +108,4 @@ class FrontendController extends Controller
         );
         return redirect()->back()->with($notification,);
     }
-
 }

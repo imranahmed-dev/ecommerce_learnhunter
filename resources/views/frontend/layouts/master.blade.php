@@ -21,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/dashboard')}}/css/dashboard.css">
     <!-- Toastr -->
     <link href="{{asset('defaults/toastr/toastr.min.css')}}" rel="stylesheet" />
+    <script src="https://js.stripe.com/v3/"></script>
 
 
 
