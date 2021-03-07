@@ -57,9 +57,26 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <div class="your-order">
+                    <div class="your-order">
                             @php
-                            $shipping = 50;
+
+                            $shipping_charge = 50;
+                            $vat = 0;
+
+                            if(Session::has('coupon')){
+                            $coupon_name = Session::get('coupon')['name'];
+                            $coupon_discount = Session::get('coupon')['discount'];
+                            }else{
+                            $coupon_name = '';
+                            $coupon_discount = 0;
+                            }
+
+                            if(Session::has('coupon')){
+                            $total = (Cart::subtotalFloat() - Session::get('coupon')['discount']) + $shipping_charge;
+                            }else{
+                            $total = Cart::subtotalFloat() + $shipping_charge;
+                            }
+
                             @endphp
                             <table class="table table-bordered">
                                 <tr>
@@ -68,27 +85,20 @@
                                 </tr>
                                 <tr>
                                     <th>Shipping Charge</th>
-                                    <td>${{$shipping}}</td>
+                                    <td>${{$shipping_charge}}</td>
                                 </tr>
-                                @if(Session::has('coupon'))
                                 <tr>
-                                    <th>Coupon Discount : ({{Session::get('coupon')['name']}}) </th>
-                                    <td>-${{Session::get('coupon')['discount']}}</td>
+                                    <th>Vat</th>
+                                    <td>${{$vat}}</td>
                                 </tr>
-                                @else
                                 <tr>
-                                    <th>Coupon Discount</th>
-                                    <td>$0</td>
+                                    <th>Coupon Discount @if(Session::has('coupon')) : ({{$coupon_name}}) @endif</th>
+                                    <td> @if(Session::has('coupon')) -${{Session::get('coupon')['discount']}} @else $0 @endif</td>
                                 </tr>
-                                @endif
 
                                 <tr>
                                     <th>Total</th>
-                                    @if(Session::has('coupon'))
-                                    <td>${{(Cart::subtotalFloat() - Session::get('coupon')['discount']) + $shipping}}</td>
-                                    @else
-                                    <td>${{Cart::subtotalFloat() + $shipping}}</td>
-                                    @endif
+                                    <td>${{$total}}</td>
                                 </tr>
 
                             </table>
@@ -112,6 +122,21 @@
                             <!-- Used to display form errors. -->
                             <div id="card-errors" role="alert"></div>
                         </div>
+
+                        <!-- passing data -->
+                        <input type="hidden" name="name" value="{{$name}}">
+                        <input type="hidden" name="phone" value="{{$phone}}">
+                        <input type="hidden" name="email" value="{{$email}}">
+                        <input type="hidden" name="division_id" value="{{$division_id}}">
+                        <input type="hidden" name="division_id" value="{{$division_id}}">
+                        <input type="hidden" name="district_id" value="{{$district_id}}">
+                        <input type="hidden" name="address" value="{{$address}}">
+
+                        <input type="hidden" name="payment_type" value="{{$payment_type}}">
+                        <input type="hidden" name="shipping_charge" value="{{$shipping_charge}}">
+                        <input type="hidden" name="coupon_discount" value="{{$coupon_discount}}">
+                        <input type="hidden" name="vat" value="{{$vat}}">
+                        <input type="hidden" name="total" value="{{$total}}">
 
                         <button class="btn btn-info btn-sm mt-2">Pay Now</button>
                     </form>

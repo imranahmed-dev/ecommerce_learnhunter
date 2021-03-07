@@ -24,7 +24,7 @@ class CartController extends Controller
         $product = Product::where('id', $id)->first();
         $data['id'] = $id;
         $data['name'] = $product->product_name;
-        $data['qty'] = 1;
+        $data['qty'] = 2;
         if($product->price_active == 1){
             $data['price'] = $product->selling_price;
         }else{

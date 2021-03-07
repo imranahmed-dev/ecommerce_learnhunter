@@ -133,7 +133,7 @@
                     <span>Order</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="#"><i class="fa fa-plus-circle"></i> Blank</a></li>
+                    <li><a href="{{route('order.pending')}}"><i class="fa fa-spinner"></i> New Order</a></li>
                 </ul>
             </li>
             <li class="has-sub">

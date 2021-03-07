@@ -25,6 +25,10 @@ Route::group(['namespace' => 'Frontend'], function () {
 });
 
 
+//Social Login
+Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
+Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
+
 //Wishlist
 Route::get('/wishlist/store/{id}', 'Frontend\WishlistController@store');
 Route::get('/wishlist/count', 'Frontend\WishlistController@wishlistCount');
@@ -61,12 +65,6 @@ Route::group(['prefix' => '/customer', 'namespace' => 'Frontend', 'middleware' =
 
 //Auth route
 Auth::routes();
-
-//Social Login
-Route::get('/login/{social}', 'Auth\LoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
-
-Route::get('/login/{social}/callback', 'Auth\LoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
-
 
 
 /////////////////////////Default routes////////////////////////////////
@@ -238,11 +236,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     //Order
     Route::group(['as' => 'order.', 'prefix' => '/order', 'namespace' => 'Backend'], function () {
 
-        Route::get('/index', 'OrderController@index')->name('index');
-        Route::get('/create', 'OrderController@create')->name('create');
-        Route::post('/store', 'OrderController@store')->name('store');
-        Route::get('/edit/{id}', 'OrderController@edit')->name('edit');
-        Route::post('/update/{id}', 'OrderController@update')->name('update');
-        Route::get('/destroy/{id}', 'OrderController@destroy')->name('destroy');
+        Route::get('/pending', 'OrderController@pending')->name('pending');
+        Route::get('/order/details/{id}', 'OrderController@details')->name('details');
     });
 });
