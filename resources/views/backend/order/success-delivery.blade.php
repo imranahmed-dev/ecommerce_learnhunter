@@ -1,10 +1,10 @@
 @extends('backend.layouts.master')
-@section('title','New Order')
+@section('title','Success Delivery')
 @section('content')
 <div id="content" class="content">
     <ol class="breadcrumb float-xl-right">
         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-        <li class="breadcrumb-item active">Order</li>
+        <li class="breadcrumb-item active">Success Delivery</li>
     </ol>
     <h1 class="page-header">Order</h1>
     <div class="row">
@@ -12,7 +12,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">
-                    <h4 class="panel-title">New Order</h4>
+                    <h4 class="panel-title">Success Delivery</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>

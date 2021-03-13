@@ -44,7 +44,8 @@ Route::get('/coupon/remove', 'Frontend\CartController@couponRemove')->name('coup
 Route::post('/payment/process', 'Frontend\PaymentController@paymentProcess')->name('payment.process');
 Route::post('/stripe/charge', 'Frontend\PaymentController@stripeCharge')->name('stripe.charge');
 
-
+//Order tracking
+Route::post('/tracking/order', 'Frontend\PaymentController@tracking')->name('tracking.order');
 
 
 /*User dashboard*/
@@ -237,6 +238,18 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
     Route::group(['as' => 'order.', 'prefix' => '/order', 'namespace' => 'Backend'], function () {
 
         Route::get('/pending', 'OrderController@pending')->name('pending');
+        Route::get('/accept', 'OrderController@orderAccept')->name('accept');
+        Route::get('/progress/delivery', 'OrderController@progressDelivery')->name('progress.delivery');
+        Route::get('/success/delivery', 'OrderController@successDelivery')->name('success.delivery');
+        Route::get('/cancel', 'OrderController@orderCancel')->name('cancel');
+
         Route::get('/order/details/{id}', 'OrderController@details')->name('details');
+
+        Route::get('/payment/accept/done/{id}', 'OrderController@paymentAccept')->name('payment.accept');
+        Route::get('/payment/cancel/done/{id}', 'OrderController@paymentCancel')->name('payment.cancel');
+        Route::get('/progress/delivery/done/{id}', 'OrderController@deliveryProgress')->name('delivery.progress');
+        Route::get('/delivery/done/{id}', 'OrderController@deliveryDone')->name('delivery.done');
+
+
     });
 });

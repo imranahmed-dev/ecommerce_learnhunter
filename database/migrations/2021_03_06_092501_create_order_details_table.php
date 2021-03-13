@@ -17,7 +17,6 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->string('order_id')->nullable();
             $table->string('product_id')->nullable();
-            $table->string('product_name')->nullable();
             $table->string('color_id')->nullable();
             $table->string('size_id')->nullable();
             $table->string('qty')->nullable();

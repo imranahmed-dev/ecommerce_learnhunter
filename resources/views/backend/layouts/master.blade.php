@@ -38,6 +38,11 @@
             font-size: 15px;
 
         }
+
+        .borderless td,
+        .borderless th {
+            border: none;
+        }
     </style>
 
 </head>
@@ -100,7 +105,7 @@
     <script src="{{asset('backend')}}/assets/plugins/summernote/dist/summernote.min.js" type="text/javascript"></script>
 
     @yield('customjs')
-    
+
     <!-- Sweetalert -->
     <script src="{{asset('defaults/sweetalert/sweetalert2@9.js')}}"></script>
     <script src="{{asset('defaults/sweetalert/sweetalertjs.js')}}"></script>
@@ -179,8 +184,8 @@
             });
         });
     </script>
-         <!--Product Sub image two -->
-        <script>
+    <!--Product Sub image two -->
+    <script>
         $(document).ready(function() {
             $('#subImage2').change(function(e) {
                 var reader = new FileReader();

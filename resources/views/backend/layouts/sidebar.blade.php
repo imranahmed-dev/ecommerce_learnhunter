@@ -133,7 +133,11 @@
                     <span>Order</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="{{route('order.pending')}}"><i class="fa fa-spinner"></i> New Order</a></li>
+                    <li><a href="{{route('order.pending')}}"> New Order</a></li>
+                    <li><a href="{{route('order.accept')}}"> Accept Payments</a></li>
+                    <li><a href="{{route('order.progress.delivery')}}"> Progress Delivery</a></li>
+                    <li><a href="{{route('order.success.delivery')}}"> Success Delivery</a></li>
+                    <li><a href="{{route('order.cancel')}}"> Cancel Order</a></li>
                 </ul>
             </li>
             <li class="has-sub">

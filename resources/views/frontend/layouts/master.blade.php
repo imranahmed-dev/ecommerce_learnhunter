@@ -36,32 +36,32 @@
         @yield('content')
 
         <!-- Newsletter -->
-<div class="newsletter">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
-                    <div class="newsletter_title_container">
-                        <div class="newsletter_icon"><img src="{{asset('frontend')}}/images/send.png" alt=""></div>
-                        <div class="newsletter_title">Sign up for Newsletter</div>
-                        <div class="newsletter_text">
-                            <p>...and receive %20 coupon for first shopping.</p>
+        <div class="newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="newsletter_container d-flex flex-lg-row flex-column align-items-lg-center align-items-center justify-content-lg-start justify-content-center">
+                            <div class="newsletter_title_container">
+                                <div class="newsletter_icon"><img src="{{asset('frontend')}}/images/send.png" alt=""></div>
+                                <div class="newsletter_title">Sign up for Newsletter</div>
+                                <div class="newsletter_text">
+                                    <p>...and receive %20 coupon for first shopping.</p>
+                                </div>
+                            </div>
+                            <div class="newsletter_content clearfix">
+                                <form action="{{route('newslater.store')}}" class="newsletter_form" method="post">
+                                    @csrf
+                                    <input name="email" type="email" class="newsletter_input" placeholder="Enter your email address">
+                                    <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
+                                    <button type="submit" class="newsletter_button">Subscribe</button>
+                                </form>
+                                <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="newsletter_content clearfix">
-                        <form action="{{route('newslater.store')}}" class="newsletter_form" method="post">
-                            @csrf
-                            <input name="email" type="email" class="newsletter_input" placeholder="Enter your email address">
-                            <div style='color:red; padding: 0 5px;'>{{($errors->has('email'))?($errors->first('email')):''}}</div>
-                            <button type="submit" class="newsletter_button">Subscribe</button>
-                        </form>
-                        <div class="newsletter_unsubscribe_link"><a href="#">unsubscribe</a></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
         <!-- Footer -->
         <footer class="footer">
@@ -169,16 +169,40 @@
     </div>
 
     <style>
-        .logo_container{
+        .logo_container {
             height: 125px;
         }
-        .header_search{
+
+        .header_search {
             height: 125px;
         }
-        .wishlist_cart{
+
+        .wishlist_cart {
             height: 125px;
         }
     </style>
+
+    <!-- Order Trackiung -->
+    <div class="modal fade" id="track" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Track Your Order</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('tracking.order')}}" method="post">
+                        @csrf
+                    <input type="text" name="order_no" placeholder="Order Number" class="form-control mb-3">
+                    <input type="submit" value="Track Now" class="btn btn-success btn-sm">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{asset('frontend')}}/styles/bootstrap4/popper.js"></script>

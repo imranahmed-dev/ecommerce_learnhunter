@@ -68,3 +68,24 @@ $(document).on('click', '#restore', function(e) {
         }
     })
 });
+
+////////////////////////For ecommerce
+
+//sweetalert payment accept
+$(document).on('click', '#order_status', function(e) {
+    e.preventDefault();
+    var link = $(this).attr("href");
+    Swal.fire({
+        title: `Are You Sure?`,
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+        denyButtonText: `No`,
+      }).then((result) => {
+        if (result.value) {
+            window.location.href = link;
+        }
+      })
+});
+
+

@@ -32,6 +32,8 @@ class CartController extends Controller
         }
         $data['weight'] = 0;
         $data['options']['image'] = $product->default_image;
+        $data['options']['color_id'] = 1;
+        $data['options']['size_id'] = 1;
     
         Cart::add($data);
         

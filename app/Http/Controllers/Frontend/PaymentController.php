@@ -86,9 +86,8 @@ class PaymentController extends Controller
             $orderDetails = new OrderDetail();
             $orderDetails->order_id       = $order->id;
             $orderDetails->product_id     = $row->id;
-            $orderDetails->product_name   = $row->name;
-            $orderDetails->color_id       = $row->color_id;
-            $orderDetails->size_id        = $row->size_id;
+            $orderDetails->color_id       = $row->options->color_id;
+            $orderDetails->size_id        = $row->options->size_id;
             $orderDetails->qty            = $row->qty;
             $orderDetails->singleprice    = $row->price;
             $orderDetails->totalprice     = $row->total;
@@ -105,5 +104,13 @@ class PaymentController extends Controller
         );
         return redirect()->route('user.dashboard')->with($notification);
 
+    }
+
+    public function tracking(Request $request){
+        $order_no = $request->order_no;
+        $data['order'] = Order::where('card_order_id',$order_no)->first();
+        $data['orders'] = OrderDetail::where('order_id', $data['order']->id)->get();
+        return view('frontend.tracking',$data);
+        
     }
 }
