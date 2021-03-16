@@ -94,6 +94,16 @@
             <li class="has-sub">
                 <a href="javascript:;">
                     <b class="caret"></b>
+                    <i class="fa fa-circle"></i>
+                    <span>Others</span>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="{{route('newslater.index')}}"><i class="fa fa-plus-circle"></i> Newslater</a></li>
+                </ul>
+            </li>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret"></b>
                     <i class="fa fa-product-hunt"></i>
                     <span>Product</span>
                 </a>
@@ -144,20 +154,13 @@
                 <a href="javascript:;">
                     <b class="caret"></b>
                     <i class="fa fa-circle"></i>
-                    <span>Others</span>
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="{{route('newslater.index')}}"><i class="fa fa-plus-circle"></i> Newslater</a></li>
-                </ul>
-            </li>
-            <li class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret"></b>
-                    <i class="fa fa-circle"></i>
                     <span>Reports</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="#"><i class="fa fa-plus-circle"></i> Blank</a></li>
+                    <li><a href="{{route('report.today.order')}}">Today Order</a></li>
+                    <li><a href="{{route('report.today.delivered')}}">Today Delivered</a></li>
+                    <li><a href="{{route('report.this.month')}}">This Month</a></li>
+                    <li><a href="{{route('report.search')}}">Search Report</a></li>
                 </ul>
             </li>
             <li class="has-sub">

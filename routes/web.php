@@ -249,7 +249,18 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'admin']], function
         Route::get('/payment/cancel/done/{id}', 'OrderController@paymentCancel')->name('payment.cancel');
         Route::get('/progress/delivery/done/{id}', 'OrderController@deliveryProgress')->name('delivery.progress');
         Route::get('/delivery/done/{id}', 'OrderController@deliveryDone')->name('delivery.done');
+    });
 
-
+    //Report
+    Route::group(['as' => 'report.', 'prefix' => '/report', 'namespace' => 'Backend'], function () {
+        Route::get('/today/order', 'ReportController@todayOrder')->name('today.order');
+        Route::get('/today/delivered', 'ReportController@todayDelivered')->name('today.delivered');
+        Route::get('/this/month', 'ReportController@thisMonth')->name('this.month');
+        //search report
+        Route::get('/search', 'ReportController@searchReport')->name('search');
+        Route::post('/search/result/date/range', 'ReportController@resultRange')->name('result.range');
+        Route::post('/search/result/date', 'ReportController@resultDate')->name('result.date');
+        Route::post('/search/result/month', 'ReportController@resultMonth')->name('result.month');
+        Route::post('/search/result/year', 'ReportController@resultYear')->name('result.year');
     });
 });

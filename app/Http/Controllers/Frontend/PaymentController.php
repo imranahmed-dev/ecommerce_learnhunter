@@ -65,8 +65,8 @@ class PaymentController extends Controller
         $order->vat                 = $request->vat;
         $order->coupon_discount     = $request->coupon_discount;
         $order->total               = $request->total;
-        $order->date                = date('d-m-y');
-        $order->month               = date('F');
+        $order->date                = date('Y-m-d');
+        $order->month               = date('Y-m');
         $order->year                = date('Y');
         $order->save();
 
